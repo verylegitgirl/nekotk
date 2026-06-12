@@ -1,26 +1,38 @@
 # Auto‑grid layout manager
 
 `nekotk` provides a convenience function **`auto_grid`** that automatically
-assigns grid positions for a collection of widgets, removing the need to
-specify ``row`` and ``column`` for every element manually.
+places a collection of widgets in a ``tkinter`` grid without the developer
+having to specify ``row``/``column`` or other layout options for each widget.
+
+The refactored implementation adds **intelligent defaults**:
+
+* Widgets that normally expand horizontally (e.g. ``Entry``, ``Text``,
+  ``Listbox``, ``Combobox``, ``Spinbox``, ``Scale`` and ``Canvas``) automatically
+  receive ``sticky="ew"`` and a ``columnspan`` of ``2``.
+* All other widgets default to ``sticky="nsew"`` when ``stretch=True``.
+* Global ``padx``/``pady`` padding is applied unless overridden per widget.
+
+These defaults make it possible to build interfaces with **zero‑configuration**
+layout code.
 
 ## Usage example
 
 ```python
 from nekotk import App, Frame, Label, Entry, Button, auto_grid
 
-app = App("Demo", size=(300, 200))
-root = Frame(app, padding=10)
+# No explicit size – the window will size itself to fit its children.
+app = App("Login Demo")
+root = Frame(app, padding=12).grid(row=0, column=0, sticky="nsew")
 
 widgets = [
-    (Label(root, "Username:"), {"sticky": "e"}),
-    (Entry(root), {}),
-    (Label(root, "Password:"), {"sticky": "e"}),
-    (Entry(root, show="*"), {}),
-    (Button(root, "Login", command=lambda: print("login")), {"columnspan": 2}),
+    (Label(root, "Email:"), None),
+    (Entry(root), None),
+    (Label(root, "Password:"), None),
+    (Entry(root, show="*"), None),
+    (Button(root, "Submit", command=lambda: print("Submitted")), None),
 ]
 
-# Place the widgets vertically with a global padding of 8 pixels.
+# Place the widgets vertically; no per‑widget layout options are required.
 auto_grid(root, widgets, orientation="vertical", padding=8)
 
 app.run()
@@ -43,3 +55,18 @@ app.run()
 The function directly calls ``grid`` on each widget and configures the parent
 grid for stretchability if requested.
 
+## App constructor – automatic sizing
+
+The ``App`` class now supports **dynamic window sizing**. When the ``size``
+argument is omitted, the constructor measures the natural size of the root
+window after all child widgets have been created and applies any ``min_size``
+or ``max_size`` constraints. This ensures the window fits its content perfectly
+without requiring the developer to calculate dimensions manually.
+
+```python
+# Zero‑configuration window size – no ``size=`` argument needed.
+app = App("Demo")
+```
+
+The window will also react to visibility changes and layout updates at runtime,
+re‑computing its geometry as needed.

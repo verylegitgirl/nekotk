@@ -560,6 +560,15 @@ def auto_grid(
                 col += 1
         opts.setdefault("row", r)
         opts.setdefault("column", c)
+        # Intelligent defaults based on widget type
+        widget_type = type(w)
+        # Widgets that usually expand horizontally
+        if widget_type.__name__ in {"Entry", "Text", "Listbox", "Combobox", "Spinbox", "Scale", "Canvas"}:
+            opts.setdefault("sticky", "ew")
+            # Give them a larger columnspan when possible (default 2)
+            opts.setdefault("columnspan", 2)
+        else:
+            opts.setdefault("sticky", "nsew" if stretch else "")
         # Apply global padding if not overridden
         opts.setdefault("padx", padding)
         opts.setdefault("pady", padding)
@@ -596,6 +605,10 @@ class App(Widget):
         super().__init__(None, **options)
         if title:
             self.widget.title(title)
+        # Store whether we should compute size automatically.
+        self._auto_size = size is None
+        # Apply size if explicitly provided; otherwise compute after widgets are
+        # added. The actual computation is performed in ``_apply_auto_size``.
         if size:
             self.geometry(size)
         if resizable is not None:
@@ -609,6 +622,42 @@ class App(Widget):
             self.widget.maxsize(*max_size)
         if theme:
             self.set_theme(theme)
+        # Bind to configure events to keep the window sized to its contents when
+        # ``_auto_size`` is enabled.
+        if self._auto_size:
+            self.widget.bind("<Configure>", lambda _e: self._apply_auto_size())
+
+    def _apply_auto_size(self) -> None:
+        """Resize the window to fit its children respecting constraints.
+
+        Called after the widget hierarchy has been built or when the layout
+        changes at runtime. It uses ``winfo_reqwidth``/``winfo_reqheight`` to
+        obtain the natural size, then clamps the result to any ``minsize`` or
+        ``maxsize`` that may have been set.
+        """
+        if not self._auto_size:
+            return
+        self.widget.update_idletasks()
+        width = self.widget.winfo_reqwidth()
+        height = self.widget.winfo_reqheight()
+        # Apply min/max constraints if they exist.
+        try:
+            min_w, min_h = self.widget.minsize()
+        except Exception:
+            min_w = min_h = None
+        try:
+            max_w, max_h = self.widget.maxsize()
+        except Exception:
+            max_w = max_h = None
+        if min_w is not None:
+            width = max(width, min_w)
+        if min_h is not None:
+            height = max(height, min_h)
+        if max_w is not None and max_w > 0:
+            width = min(width, max_w)
+        if max_h is not None and max_h > 0:
+            height = min(height, max_h)
+        self.geometry((width, height))
 
     def _create_widget(self, parent: Any, **options: Any) -> tk.Tk:
         root = getattr(tk, "_default_root", None)
