@@ -1,6 +1,6 @@
 # nekotk 🚀
 
-![Banner](https://raw.githubusercontent.com/verylegitgirl/nekotk/main/assets/nekotk_banner.png)
+![Banner](https://raw.githubusercontent.com/verylegitgirl/nekotk/refs/heads/main/assets/nekotk.png)
 
 [![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/verylegitgirl/nekotk/blob/main/LICENSE)
