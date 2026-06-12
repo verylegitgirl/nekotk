@@ -12,7 +12,7 @@ from nekotk import App, Frame, Label, Entry, Button, auto_grid
 
 
 def main() -> None:
-    app = App("Login Demo", size=(300, 200))
+    app = App("Login Demo")
 
     # Root container with a little padding and stretchable layout.
     root = Frame(app, padding=12).grid(row=0, column=0, sticky="nsew")

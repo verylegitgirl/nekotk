@@ -5,21 +5,6 @@ The module keeps the standard tkinter API available, but makes the common
 workflow shorter: create an :class:`App`, add widgets, call ``pack``, ``grid`` or
 ``place``, and start the event loop with :meth:`App.run`.
 
-Example::
-
-    from nekotk import App, Frame, Label, Entry, Button, Validator
-
-    app = App("Login", size=(320, 140))
-    root = Frame(app, padding=12).grid(row=0, column=0, sticky="nsew")
-
-    Label(root, "Email:").grid(row=0, column=0, sticky="w")
-    email = Entry(root).grid(row=0, column=1, sticky="ew")
-    email.validate(Validator.required("Email is required."),
-                   Validator.regex(r".+@.+\\..+", "Enter a valid email."))
-
-    Button(root, "Done", command=lambda: print(email.text())).grid(row=1, column=1)
-    app.run()
-
 Only the Python standard library is required. The package is compatible with
 Python 3.10+.
 """
@@ -209,10 +194,10 @@ def font(
     ``"roman"`` when the caller does not specify them.
     """
     return (
-        family or "TkDefaultFont",
+        family if family is not None else "TkDefaultFont",
         size,
-        weight or "normal",
-        slant or "roman",
+        weight if weight is not None else "normal",
+        slant if slant is not None else "roman",
         underline,
         overstrike,
     )
@@ -489,7 +474,7 @@ class Widget:
     def _has_option(self, name: str) -> bool:
         try:
             return name in self.widget.keys()
-        except tk.TclError:
+        except (tk.TclError, AttributeError):
             return False
 
     def _install_validation(self) -> None:
@@ -579,9 +564,9 @@ def auto_grid(
     # Configure stretchability
     if stretch:
         for i in range(max_row + 1):
-            parent.widget.grid_rowconfigure(i, weight=1)
+            parent.widget.grid_rowconfigure(i, weight=1 if stretch else 0)
         for i in range(max_col + 1):
-            parent.widget.grid_columnconfigure(i, weight=1)
+            parent.widget.grid_columnconfigure(i, weight=1 if stretch else 0)
 
 
 class App(Widget):

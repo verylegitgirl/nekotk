@@ -13,6 +13,8 @@ The refactored implementation adds **intelligent defaults**:
 * Global ``padx``/``pady`` padding is applied unless overridden per widget.
 
 These defaults make it possible to build interfaces with **zero‑configuration**
+
+The `autosize` feature enhances this capability by automatically adjusting the grid layout to accommodate the content of the widgets, ensuring optimal use of space while maintaining readability and usability.
 layout code.
 
 ## Usage example
@@ -51,6 +53,7 @@ app.run()
   overridden per widget.
 * **`stretch`** – When ``True`` (default) the grid rows and columns are given a
   weight of ``1`` so they expand to fill the container.
+* **`autosize`** – When ``True`` (default) the grid automatically adjusts the size of the widgets to fit their content, ensuring optimal use of space while maintaining readability and usability. This feature is particularly useful for widgets that contain dynamic content, such as labels or text fields, and helps to prevent unnecessary scrolling or truncation of content.
 
 The function directly calls ``grid`` on each widget and configures the parent
 grid for stretchability if requested.
