@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from nekotk import App, Frame, Label, Entry, Button, auto_grid
 
 
-def main() -> None:
+def main():
     app = App("Login Demo")
 
     # Root container with a little padding and stretchable layout.

@@ -1,6 +1,11 @@
 # nekotk 🚀
 
-![Banner](https://raw.githubusercontent.com/yourusername/nekotk/main/assets/banner.png)
+![Banner](https://raw.githubusercontent.com/verylegitgirl/nekotk/main/assets/nekotk_banner.png)
+
+[![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/verylegitgirl/nekotk/blob/main/LICENSE)
+[![CI/CD Status](https://img.shields.io/github/actions/workflow/status/verylegitgirl/nekotk/ci.yml?branch=main)](https://github.com/verylegitgirl/nekotk/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/verylegitgirl/nekotk/main.svg)](https://codecov.io/gh/verylegitgirl/nekotk)
 
 **nekotk** – a friendly, lightweight toolkit for quick demos and examples.  
 It ships with a tiny collection of utilities that make prototyping in Python a breeze.
@@ -26,9 +31,6 @@ demo.run()
 
 Full documentation and examples are available in the separate file:
 [docs/auto_grid.md](docs/auto_grid.md)
-
-## 📸 Screenshots & GIFs
-![Demo GIF](https://raw.githubusercontent.com/yourusername/nekotk/main/assets/demo.gif)
 
 ## 📚 Documentation
 Full documentation is available at [docs/fulldocs.md](docs/full_docs.md).
