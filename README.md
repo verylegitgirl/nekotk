@@ -22,6 +22,11 @@ from nekotk import demo
 demo.run()
 ```
 
+## 📐 Auto‑grid layout manager
+
+Full documentation and examples are available in the separate file:
+[docs/auto_grid.md](docs/auto_grid.md)
+
 ## 📸 Screenshots & GIFs
 ![Demo GIF](https://raw.githubusercontent.com/yourusername/nekotk/main/assets/demo.gif)
 
