@@ -605,10 +605,9 @@ class App(Widget):
         super().__init__(None, **options)
         if title:
             self.widget.title(title)
-        # Store whether we should compute size automatically.
-        self._auto_size = size is None
-        # Apply size if explicitly provided; otherwise compute after widgets are
-        # added. The actual computation is performed in ``_apply_auto_size``.
+        # Automatic window sizing is disabled due to known bugs. Size must be
+        # provided explicitly by the caller.
+        self._auto_size = False
         if size:
             self.geometry(size)
         if resizable is not None:
@@ -622,10 +621,6 @@ class App(Widget):
             self.widget.maxsize(*max_size)
         if theme:
             self.set_theme(theme)
-        # Bind to configure events to keep the window sized to its contents when
-        # ``_auto_size`` is enabled.
-        if self._auto_size:
-            self.widget.bind("<Configure>", lambda _e: self._apply_auto_size())
 
     def _apply_auto_size(self) -> None:
         """Resize the window to fit its children respecting constraints.

@@ -31,7 +31,7 @@ Full documentation and examples are available in the separate file:
 ![Demo GIF](https://raw.githubusercontent.com/yourusername/nekotk/main/assets/demo.gif)
 
 ## 📚 Documentation
-Full documentation is available at <https://github.com/yourusername/nekotk#readme>.
+Full documentation is available at [docs/fulldocs.md](docs/full_docs.md).
 
 ## 🤝 Contributing
 Feel free to open issues or submit pull requests – all contributions are welcome!

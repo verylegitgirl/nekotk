@@ -55,18 +55,3 @@ app.run()
 The function directly calls ``grid`` on each widget and configures the parent
 grid for stretchability if requested.
 
-## App constructor – automatic sizing
-
-The ``App`` class now supports **dynamic window sizing**. When the ``size``
-argument is omitted, the constructor measures the natural size of the root
-window after all child widgets have been created and applies any ``min_size``
-or ``max_size`` constraints. This ensures the window fits its content perfectly
-without requiring the developer to calculate dimensions manually.
-
-```python
-# Zero‑configuration window size – no ``size=`` argument needed.
-app = App("Demo")
-```
-
-The window will also react to visibility changes and layout updates at runtime,
-re‑computing its geometry as needed.
